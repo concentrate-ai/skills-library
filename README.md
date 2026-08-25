@@ -9,31 +9,31 @@ These skills work with any agent that supports the Agent Skills standard, includ
 ### Claude Code
 
 ```text
-/plugin marketplace add AjayK47/skills-library
+/plugin marketplace add concentrate-ai/skills-library
 /plugin install concentrate@concentrate
 ```
 
 ### GitHub CLI (`gh skill`)
 
 ```bash
-gh skill install AjayK47/skills-library
+gh skill install concentrate-ai/skills-library
 ```
 
 To install a specific skill:
 
 ```bash
-gh skill install AjayK47/skills-library concentrate-models
+gh skill install concentrate-ai/skills-library concentrate-models
 ```
 
 ### Cursor
 
-Add via **Settings → Rules → Add Rule → Remote Rule (GitHub)** with `AjayK47/skills-library`.
+Add via **Settings → Rules → Add Rule → Remote Rule (GitHub)** with `concentrate-ai/skills-library`.
 
 ### OpenCode
 
 ```bash
 mkdir -p ~/.config/opencode/skills
-git clone https://github.com/AjayK47/skills-library.git /tmp/concentrate-skills
+git clone https://github.com/concentrate-ai/skills-library.git /tmp/concentrate-skills
 cp -r /tmp/concentrate-skills/skills/* ~/.config/opencode/skills/
 rm -rf /tmp/concentrate-skills
 ```
