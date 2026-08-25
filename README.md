@@ -32,6 +32,7 @@ Add via **Settings → Rules → Add Rule → Remote Rule (GitHub)** with `AjayK
 ### OpenCode
 
 ```bash
+mkdir -p ~/.config/opencode/skills
 git clone https://github.com/AjayK47/skills-library.git /tmp/concentrate-skills
 cp -r /tmp/concentrate-skills/skills/* ~/.config/opencode/skills/
 rm -rf /tmp/concentrate-skills
