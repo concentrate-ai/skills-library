@@ -1,0 +1,11 @@
+{
+  "name": "concentrate",
+  "description": "Agent skills and integrations for Concentrate AI: Unified API for 170+ models, automatic cost/latency routing, Zero Data Retention (ZDR), tool calling, and multimodal vision.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Concentrate AI",
+    "url": "https://concentrate.ai"
+  },
+  "homepage": "https://concentrate.ai/docs",
+  "repository": "https://github.com/AjayK47/skills-library"
+}

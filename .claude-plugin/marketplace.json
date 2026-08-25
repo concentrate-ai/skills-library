@@ -1,0 +1,16 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "concentrate",
+  "owner": {
+    "name": "Concentrate AI",
+    "url": "https://concentrate.ai"
+  },
+  "plugins": [
+    {
+      "name": "concentrate",
+      "description": "Skills for building with Concentrate AI's unified API (170+ models, ZDR privacy routing, streaming, and tool calling)",
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}
