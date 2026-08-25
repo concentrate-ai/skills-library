@@ -90,8 +90,8 @@ def list_models(args: argparse.Namespace) -> None:
         "context": lambda m: -max_limit(m, "max_input_tokens", "context_window"),
         "output": lambda m: -max_limit(m, "max_tokens", "max_output_tokens"),
     }[args.sort]
-    models.sort(key=key)
-    models = models[: args.limit]
+    if args.limit is not None and args.limit > 0:
+        models = models[: args.limit]
 
     if args.json:
         print(json.dumps(models, indent=2))
@@ -192,7 +192,7 @@ def parser() -> argparse.ArgumentParser:
     listing.add_argument("--provider")
     listing.add_argument("--capability", choices=["input.image", "input.file.pdf", "text.format.json_schema", "tools.function_calling", "stream"])
     listing.add_argument("--sort", choices=["name", "newest", "context", "output"], default="name")
-    listing.add_argument("--limit", type=int, default=50)
+    listing.add_argument("--limit", type=int, default=None, help="Limit number of returned models (default: all)")
     listing.add_argument("--json", action="store_true")
     listing.set_defaults(run=list_models)
 
