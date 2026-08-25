@@ -5,5 +5,7 @@
   "author": {
     "name": "Concentrate AI",
     "url": "https://concentrate.ai"
-  }
+  },
+  "homepage": "https://concentrate.ai/docs",
+  "repository": "https://github.com/concentrate-ai/skills-library"
 }

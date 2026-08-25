@@ -6,5 +6,7 @@
     "name": "Concentrate AI",
     "url": "https://concentrate.ai"
   },
+  "homepage": "https://concentrate.ai/docs",
+  "repository": "https://github.com/concentrate-ai/skills-library",
   "keywords": ["concentrate", "ai", "llm", "models", "responses-api", "model-routing", "ai-gateway"]
 }
