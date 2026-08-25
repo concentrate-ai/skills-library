@@ -1,77 +1,80 @@
-# Concentrate AI Skills & Plugin Library
+# Concentrate AI Skills
 
-A comprehensive collection of [Agent Skills](https://agentskills.io) and plugins for building with [Concentrate AI](https://concentrate.ai) — the unified gateway for **170+ AI models**, cost/latency auto-routing, and Zero Data Retention (ZDR) privacy.
+Agent Skills for building with [Concentrate AI](https://concentrate.ai), grounded in the documentation published by the Concentrate AI team.
 
-These skills empower AI coding assistants (including **Claude Code**, **Cursor**, **OpenCode**, **Gemini CLI**, **Windsurf**, and **OpenAI Codex**) to generate accurate, type-safe, zero-hallucination code for Concentrate AI APIs.
+The library follows the useful parts of the [OpenRouter skills repository](https://github.com/OpenRouterTeam/skills): narrowly triggered skills, progressive references, live discovery scripts where data changes frequently, and native plugin metadata. It intentionally does not include image generation, speech-to-text, text-to-speech, video, OAuth, analytics-query, or a dedicated SDK skill because those surfaces are not documented by Concentrate today.
 
----
+## Install
 
-## 📦 Installation & Setup
+These folders use the [Agent Skills](https://agentskills.io) format and work with agents that support it.
 
-### 1. Claude Code
-Install as a native Claude Code plugin:
-```bash
+### Claude Code plugin
+
+```text
 /plugin marketplace add AjayK47/skills-library
 /plugin install concentrate@concentrate
 ```
 
-### 2. GitHub CLI (`gh skill`)
-Works with Claude Code, Cursor, OpenCode, Codex, Gemini CLI, and Windsurf (requires GitHub CLI v2.90.0+):
+### GitHub CLI
 
 ```bash
-# Install all Concentrate skills
 gh skill install AjayK47/skills-library
-
-# Or install a specific skill (e.g., ZDR privacy)
-gh skill install AjayK47/skills-library concentrate-zdr
-
-# Install at user scope (across all projects)
-gh skill install AjayK47/skills-library --scope user
 ```
 
-### 3. Cursor
-1. Go to **Settings** → **Rules** → **Add Rule** → **Remote Rule (GitHub)**.
-2. Enter repository: `AjayK47/skills-library`.
+Install one skill by adding its folder name, for example:
 
-### 4. OpenCode
+```bash
+gh skill install AjayK47/skills-library concentrate-models
+```
+
+### Cursor
+
+In **Settings → Rules → Add Rule → Remote Rule (GitHub)**, enter `AjayK47/skills-library`.
+
+### OpenCode
+
 ```bash
 git clone https://github.com/AjayK47/skills-library.git /tmp/concentrate-skills
 cp -r /tmp/concentrate-skills/skills/* ~/.config/opencode/skills/
 rm -rf /tmp/concentrate-skills
 ```
 
----
+## Skills
 
-## 🛠️ Included Skills
+| Skill | Use it for |
+|---|---|
+| [`concentrate-responses`](skills/concentrate-responses/SKILL.md) | Responses API requests, stateful turns, tools, structured output, web search, streaming, caching, and errors |
+| [`concentrate-models`](skills/concentrate-models/SKILL.md) | Live model/provider discovery, capability checks, comparisons, routing, and fallbacks |
+| [`concentrate-multimodal`](skills/concentrate-multimodal/SKILL.md) | Image inputs, supported formats, model/provider capability checks, and limits |
+| [`concentrate-data-controls`](skills/concentrate-data-controls/SKILL.md) | ZDR, request logging, guardrails, `redact-v1`, and BYOK |
+| [`concentrate-integrations`](skills/concentrate-integrations/SKILL.md) | Supported clients, compatibility endpoints, and migrations from other gateways |
+| [`concentrate-alerts`](skills/concentrate-alerts/SKILL.md) | Choosing and configuring documented spend, balance, key, error, and reporting alerts |
 
-| Skill | Description | Triggers / Use Cases |
-| :--- | :--- | :--- |
-| [`concentrate-responses`](./skills/concentrate-responses/SKILL.md) | Standard `POST /v1/responses` usage, structured outputs (`json_schema`), multi-turn loops, SSE streaming, and tool calling. | Generating text/code, tool calling, JSON schema outputs, streaming responses. |
-| [`concentrate-models`](./skills/concentrate-models/SKILL.md) | Model discovery, provider prefixes (`bedrock/...`, `openai/...`), and dynamic auto-routing (`model: "auto"` with sort by cost/latency). | Model selection, provider routing, benchmarking, pricing optimization. |
-| [`concentrate-zdr`](./skills/concentrate-zdr/SKILL.md) | Enterprise privacy routing across 104+ Zero Data Retention certified models/providers (`bedrock`, `azure`, `vertex`, etc.). | Enterprise compliance, HIPAA, fintech, legal, zero-data retention enforcement. |
-| [`concentrate-multimodal`](./skills/concentrate-multimodal/SKILL.md) | Sending base64 and URL images to 100+ vision-capable models with detail level controls. | Image analysis, OCR, visual document parsing, UI comparison. |
-| [`concentrate-integrations`](./skills/concentrate-integrations/SKILL.md) | Setting up Claude Code, Cursor, Python/TypeScript OpenAI SDKs, LangChain, and LlamaIndex with Concentrate AI. | IDE configuration, OpenAI client base URL overrides, pay-as-you-go setup. |
+## Environment
 
----
+Authenticated inference requests use an API key from the [Concentrate dashboard](https://concentrate.ai):
 
-## 🔑 Environment Setup
-
-All Concentrate AI requests require an API key:
 ```bash
 export CONCENTRATE_API_KEY="your_api_key_here"
 ```
-Get an API key from the [Concentrate AI Dashboard](https://concentrate.ai).
 
----
+Never commit API keys. The public model-catalog endpoints and the model discovery script do not require a key.
 
-## 📚 Official Resources
+## Source policy
 
-* [Concentrate AI Website](https://concentrate.ai)
-* [Documentation & API Reference](https://concentrate.ai/docs)
-* [Models Catalog & Pricing](https://concentrate.ai/models)
-* [Documentation Index (llms.txt)](https://concentrate.ai/docs/llms.txt)
+- Prefer the live [`GET /v1/models`](https://api.concentrate.ai/v1/models) catalog for model names and capabilities; these change faster than skills should.
+- Prefer the official [documentation index](https://concentrate.ai/docs/llms.txt) and [OpenAPI specification](https://concentrate.ai/docs/api-reference/openapi.json) for behavior and schemas.
+- Treat Chat Completions and Messages compatibility as beta. Prefer the Responses API for production, as the official docs recommend.
+- Do not claim Concentrate supports a modality, endpoint, integration, or SDK unless it is present in the official docs.
 
----
+## Official resources
 
-## 📄 License
-MIT License. See [LICENSE](./LICENSE) for details.
+- [Documentation](https://concentrate.ai/docs)
+- [Documentation index](https://concentrate.ai/docs/llms.txt)
+- [API introduction](https://concentrate.ai/docs/api-reference/introduction)
+- [OpenAPI specification](https://concentrate.ai/docs/api-reference/openapi.json)
+- [Models catalog](https://concentrate.ai/models)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
