@@ -90,6 +90,7 @@ def list_models(args: argparse.Namespace) -> None:
         "context": lambda m: -max_limit(m, "max_input_tokens", "context_window"),
         "output": lambda m: -max_limit(m, "max_tokens", "max_output_tokens"),
     }[args.sort]
+    models.sort(key=key)
     if args.limit is not None and args.limit > 0:
         models = models[: args.limit]
 
@@ -125,7 +126,13 @@ def price(provider: dict[str, Any], direction: str) -> str:
     node = provider.get("pricing", {}).get("tokens", {}).get(direction, {})
     usd = node.get("price", {}).get("USD")
     units = node.get("units")
-    return "-" if usd is None else f"${usd:g}/{units or 'unit'}"
+    if usd is None:
+        return "-"
+    if units == 1000000:
+        return f"${usd:g}/M"
+    if units == 1000:
+        return f"${usd:g}/k"
+    return f"${usd:g}/{units or 'unit'}"
 
 
 def summary(detail: dict[str, Any]) -> dict[str, Any]:
@@ -165,21 +172,22 @@ def compare_models(args: argparse.Namespace) -> None:
         return
     print(f"{'MODEL':34} {'PROVIDERS':>9} {'MAX CONTEXT':>12} {'MAX OUTPUT':>12} {'ZDR PROVIDERS'}")
     for row in rows:
-        providers = row["providers"]
-        contexts = [p["context_window"] for p in providers if p["context_window"] is not None]
-        outputs = [p["max_output_tokens"] for p in providers if p["max_output_tokens"] is not None]
-        zdr = ",".join(p["slug"] for p in providers if p["zdr"]) or "-"
-        print(f"{str(row['model']):34.34} {len(providers):>9} {str(max(contexts) if contexts else '-'):>12} {str(max(outputs) if outputs else '-'):>12} {zdr}")
+        providers = row.get("providers", [])
+        contexts = [p.get("context_window") for p in providers if p.get("context_window") is not None]
+        outputs = [p.get("max_output_tokens") for p in providers if p.get("max_output_tokens") is not None]
+        zdr = ",".join(p.get("slug", "") for p in providers if p.get("zdr")) or "-"
+        print(f"{str(row.get('model', '-')):34.34} {len(providers):>9} {str(max(contexts) if contexts else '-'):>12} {str(max(outputs) if outputs else '-'):>12} {zdr}")
 
 
 def list_providers(args: argparse.Namespace) -> None:
-    providers = fetch("/providers")
+    payload = fetch("/providers")
+    providers = payload if isinstance(payload, list) else payload.get("data", [])
     if args.json:
         print(json.dumps(providers, indent=2))
         return
     for provider in providers:
         aliases = ", ".join(provider.get("aliases", []))
-        print(f"{provider['slug']:16} {provider['display_name']:24} {aliases}")
+        print(f"{provider.get('slug', '-'):16} {provider.get('display_name', '-'):24} {aliases}")
 
 
 def parser() -> argparse.ArgumentParser:
