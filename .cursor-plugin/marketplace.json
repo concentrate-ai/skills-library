@@ -1,0 +1,13 @@
+{
+  "name": "concentrate",
+  "owner": {
+    "name": "Concentrate AI"
+  },
+  "plugins": [
+    {
+      "name": "concentrate",
+      "source": "./",
+      "description": "Documentation-grounded skills for the Concentrate AI platform"
+    }
+  ]
+}

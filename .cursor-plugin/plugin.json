@@ -1,0 +1,12 @@
+{
+  "name": "concentrate",
+  "version": "1.0.0",
+  "description": "Skills for Concentrate AI: Responses API, model discovery, routing, multimodal input, data controls, integrations, and alerts",
+  "author": {
+    "name": "Concentrate AI",
+    "url": "https://concentrate.ai"
+  },
+  "homepage": "https://concentrate.ai/docs",
+  "repository": "https://github.com/concentrate-ai/skills-library",
+  "keywords": ["concentrate", "ai", "llm", "models", "responses-api", "model-routing", "ai-gateway"]
+}
